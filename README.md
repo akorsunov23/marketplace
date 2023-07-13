@@ -39,10 +39,6 @@ flake8
 pylint --rcfile=.pylintrc market/* 
 ```
 
-# Цели проекта
-
-Код написан в учебных целях — это курс по Джанго на сайте [Skillbox](https://go.skillbox.ru/education/course/django-framework).  
-
 ### Быстрый тест:
 
 Для быстрого тестирования необходимо загрузить фикстуры.
