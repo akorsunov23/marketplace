@@ -2,47 +2,32 @@
 Владелец торгового центра во время COVID-карантина решил перевести своих арендодателей в онлайн. Сделать это он намерен с помощью создания платформы, на которой продавцы смогут разместить информацию о себе и своём товаре. Онлайновый торговый центр или, другими словами, интернет-магазин, являющийся агрегатором товаров различных продавцов.
 
 ## Как установить
-Для работы микросервиса нужен Python версии не ниже 3.10 и установленное ПО для контейнеризации - [Docker](https://docs.docker.com/engine/install/).    
+Для работы микросервиса нужен Python версии не ниже 3.10.    
 
 Настройка переменных окружения  
-1. Скопируйте файл .env.dist в .env
-2. Заполните .env файл. Пример:  
-```yaml
-DATABASE_URL = postgresql://skillbox:secret@127.0.0.1:5434/market
-REDIS_URL = redis://127.0.0.1:6379/0
-```
+1. Склонируйте репозиторий
+```shell
+git clone https://github.com/akorsunov23/marketplace.git
+``` 
+2. Создайте файл .env. и заполните его по примеру env.dist
 
-Запуск СУБД Postgresql
-```shell
-docker run --name skillbox-db -e POSTGRES_USER=skillbox -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=market -p 5434:5432 -d postgres
-```
-Запуск брокера сообщений REDIS
-```shell
-docker run --name redis-db -p 6379:6379 -d redis 
-```
-Установка виртуального окружения для среды разработки на примере ОС Windows
+3. Установка виртуального окружения для среды разработки и установите зависимости
+ - на примере ОС Windows
 ```shell
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements\dev.txt
 ```
-Установка виртуального окружения для продовой среды на примере ОС Linux
+ - на примере ОС Linux
 ```shell
 python -m venv venv
-. venv/bin/activate
+source venv/bin/activate
 pip install -r requirements/base.txt
-```  
-### Как удалить контейнеры
-СУБД Postgres  
 ```
- docker rm -f -v skillbox-db
-```
-
-Брокер сообщений REDIS  
-```
- docker rm -f -v skillbox-db
-```
-
+4. Запустите локальный сервер
+```shell
+python manage.py runserver
+``` 
 ## Проверка форматирования кода
 Проверка кода выполняется из корневой папки репозитория.    
 * Анализатор кода flake8  
@@ -54,27 +39,17 @@ flake8
 pylint --rcfile=.pylintrc market/* 
 ```
 
-## Как запустить web-сервер
-Запуск сервера производится в активированном локальном окружение из папки `market/`
-```shell
-python manage.py runserver 0.0.0.0:8000
-```
-
 # Цели проекта
 
 Код написан в учебных целях — это курс по Джанго на сайте [Skillbox](https://go.skillbox.ru/education/course/django-framework).  
 
-## Разработка
-### Работа в оболочке
-```shell
-python manage.py shell_plus
-```
-### Приложение users:
+### Быстрый тест:
 
-Загрузка данных в модель User выполняется из папки `market/` следующей командой:
+Для быстрого тестирования необходимо загрузить фикстуры.
+Загрузка данных в модели выполняется из папки `market/` следующей командой:
 
 ```shell
-python manage.py loaddata fixtures/005_users.json --app users.User
+python manage.py loaddata fixtures/*.json
 ```
 
 #### Данные cуперпользователя:
@@ -96,9 +71,6 @@ email: admin@admin.ru password: admin
 4. email: glenn@test.ru password: 1304test
 5. email: keith@test.ru password: 1304test  
 
-#### Данные для доступа к серверной электронной почте:
-
-email: service.megano@gmail.com password: 2023Django
 
 ### Приложение imports:
 
@@ -146,10 +118,6 @@ python manage.py runserver
 #### Система оплаты Stripe
 
 Система оплаты настроена на тестовый режим!
-
-Данные для доступа к личному кабинету [Stripe](https://dashboard.stripe.com/test/dashboard):
- - логин - service.megano@gmail.com
- - пароль - 2023Megano/
 
 Номер карты для тестирования оплаты - 
 4242 4242 4242 4242 4242, остальные данные рандомные.
