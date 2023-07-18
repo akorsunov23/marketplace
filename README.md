@@ -34,10 +34,6 @@ python manage.py runserver
 ```shell
 flake8
 ```
-* Линтер pylint  
-```shell
-pylint --rcfile=.pylintrc market/* 
-```
 
 ### Быстрый тест:
 
